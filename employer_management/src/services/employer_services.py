@@ -37,7 +37,6 @@ class EmployerServices:
 
     def create_part_time_employer(self, name, phone, birthday, day_salary, department_id):
         try:
-            # get the department_object to set the department_id of employer object
             department = Department.objects.get(id=department_id)
 
             # create new Employer
@@ -59,7 +58,6 @@ class EmployerServices:
     def create_full_time_employer(self, name, phone, birthday, department_id, month_salary, salary_level,
                                   allowance):
         try:
-            # get the department_object to set the department_id of employer object
             department = Department.objects.get(id=department_id)
 
             # create new Employer
@@ -174,10 +172,16 @@ class EmployerServices:
             if part_time_salary.total_salary > full_time_salary.total_salary:
                 employer = part_time_salary.part_time_employer_id.employer_id
 
-                employer.day_salary = part_time_salary.part_time_employer_id.day_salary
-                employer.total_salary = part_time_salary.total_salary
+                employer.month_salary = None
+                employer.salary_level = None
+                employer.allowance = None
 
-                serializer = MaxPartTimeEmployerSalarySerializer(employer)
+                employer.day_salary = part_time_salary.part_time_employer_id.day_salary
+
+                employer.total_salary = part_time_salary.total_salary
+                employer.working_day_number = part_time_salary.working_day_number
+
+                serializer = EmployerListSalaryFilterSerializer(employer)
 
                 return serializer.data
 
@@ -186,9 +190,13 @@ class EmployerServices:
             employer.month_salary = full_time_salary.full_time_employer_id.month_salary
             employer.salary_level = full_time_salary.full_time_employer_id.salary_level
             employer.allowance = full_time_salary.full_time_employer_id.allowance
-            employer.total_salary = part_time_salary.total_salary
 
-            serializer = MaxPartTimeEmployerSalarySerializer(employer)
+            employer.day_salary = None
+
+            employer.total_salary = full_time_salary.total_salary
+            employer.working_day_number = None
+
+            serializer = EmployerListSalaryFilterSerializer(employer)
 
             return serializer.data
 
@@ -197,10 +205,16 @@ class EmployerServices:
 
             employer = part_time_salary.part_time_employer_id.employer_id
 
-            employer.day_salary = part_time_salary.part_time_employer_id.day_salary
-            employer.total_salary = part_time_salary.total_salary
+            employer.month_salary = None
+            employer.salary_level = None
+            employer.allowance = None
 
-            serializer = MaxPartTimeEmployerSalarySerializer(employer)
+            employer.day_salary = part_time_salary.part_time_employer_id.day_salary
+
+            employer.total_salary = part_time_salary.total_salary
+            employer.working_day_number = part_time_salary.working_day_number
+
+            serializer = EmployerListSalaryFilterSerializer(employer)
 
             return serializer.data
 
@@ -212,9 +226,13 @@ class EmployerServices:
             employer.month_salary = full_time_salary.full_time_employer_id.month_salary
             employer.salary_level = full_time_salary.full_time_employer_id.salary_level
             employer.allowance = full_time_salary.full_time_employer_id.allowance
-            employer.total_salary = full_time_salary.total_salary
 
-            serializer = MaxFullTimeEmployerSalarySerializer(employer)
+            employer.day_salary = None
+
+            employer.total_salary = full_time_salary.total_salary
+            employer.working_day_number = None
+
+            serializer = EmployerListSalaryFilterSerializer(employer)
 
             return serializer.data
 
