@@ -25,7 +25,7 @@ SECRET_KEY = 'i+r8wg!pz8pdzfvyb!66i9*-m2z*4d$!vf=y(au+ajoqczzij)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:8080', '127.0.0.1']
+ALLOWED_HOSTS = ['http://localhost:8080', '127.0.0.1', 'localhost:8000']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders',
+    'employer_site',
     'src'
 ]
 
@@ -58,6 +59,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
     'localhost:3000',
+    'localhost:8000',
+    '127.0.0.1:8000',
 )
 
 ROOT_URLCONF = 'employer_management.urls'
@@ -153,6 +156,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 # swagger login logout
